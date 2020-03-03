@@ -1,11 +1,30 @@
 package com.orvif.website3.Entity;
 
+import com.orvif.website3.bean.Encours;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "utilisateurs", schema = "t_orvif_web_dev")
 public class Utilisateurs {
+    private static final long serialVersionUID = 9107137246805194887L;//
     private int idUtilisateurs;
+    private int numCli;//
+    private Date lastSignin;//
+    private String mail;//
+    private String type_client;//
+    private String etat;//
+    private String telephone;//
+    private String numeroSiren;//
+    private String nomSociete;//
+    private Adresse companyAdress;//
+    private Encours encours;//
+    private boolean bloqued = false; //Client bloqué/non bloqué (que pour les pros)//
+    private boolean closed = false; //Client fermé (=supprimé)/ non fermé (que pour les pros)//
+    private boolean verifiedMail;//
     private String nom;
     private String prenom;
     private String login;
@@ -14,6 +33,7 @@ public class Utilisateurs {
     private String salt1;
     private String salt2;
     private Profils profilsByProfil;//
+    private List<Adresse> adresseCollection = new ArrayList<>();//
 
     @Id
     @Column(name = "id_utilisateurs", nullable = false)
@@ -135,5 +155,134 @@ public class Utilisateurs {
 
     public void setProfilsByProfil(Profils profilsByProfil) {
         this.profilsByProfil = profilsByProfil;
+    }
+
+
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#clone()
+     */
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public int getNumCli() {
+        return numCli;
+    }
+
+    public void setNumCli(int numCli) {
+        this.numCli = numCli;
+    }
+
+    public Date getLastSignin() {
+        return lastSignin;
+    }
+
+    public void setLastSignin(Date lastSignin) {
+        this.lastSignin = lastSignin;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getType_client() {
+        return type_client;
+    }
+
+    public void setType_client(String type_client) {
+        this.type_client = type_client;
+    }
+
+    public String getEtat() {
+        return etat;
+    }
+
+    public void setEtat(String etat) {
+        this.etat = etat;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getNumeroSiren() {
+        return numeroSiren;
+    }
+
+    public void setNumeroSiren(String numeroSiren) {
+        this.numeroSiren = numeroSiren;
+    }
+
+    public String getNomSociete() {
+        return nomSociete;
+    }
+
+    public void setNomSociete(String nomSociete) {
+        this.nomSociete = nomSociete;
+    }
+
+   /** public Adresse getCompanyAdress() {
+        return companyAdress;
+    }**/
+
+    public void setCompanyAdress(Adresse companyAdress) {
+        this.companyAdress = companyAdress;
+    }
+
+    public Encours getEncours() {
+        return encours;
+    }
+
+    public void setEncours(Encours encours) {
+        this.encours = encours;
+    }
+
+    public boolean isBloqued() {
+        return bloqued;
+    }
+
+    public void setBloqued(boolean bloqued) {
+        this.bloqued = bloqued;
+    }
+
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
+    }
+
+    public boolean isVerifiedMail() {
+        return verifiedMail;
+    }
+
+    public void setVerifiedMail(boolean verifiedMail) {
+        this.verifiedMail = verifiedMail;
+    }
+
+    @Transient
+    public List<Adresse> getAdresseCollection() {
+        return adresseCollection;
+    }
+
+    public void setAdresseCollection(List<Adresse> adresseCollection) {
+        this.adresseCollection = adresseCollection;
     }
 }

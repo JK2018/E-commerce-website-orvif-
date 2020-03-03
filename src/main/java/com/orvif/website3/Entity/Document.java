@@ -1,6 +1,15 @@
 package com.orvif.website3.Entity;
 
+import com.orvif.website3.Repository.DAOException;
+import com.orvif.website3.Repository.DocumentRepository;
+import org.dom4j.DocumentHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "document", schema = "t_orvif_web_dev")
@@ -10,6 +19,9 @@ public class Document {
     private String type;
     private String titre;
     private String description;
+
+    @Autowired
+    private DocumentHelper dh;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -87,4 +99,18 @@ public class Document {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
+
+/**
+    public Map<String, List<Document>> getDocumentListByProduit(int id){
+        Map<String, List<com.orvif.website3.Entity.Document>>  ret = dh.getDocumentListByProduit(id);
+        return ret;
+    }**/
+
+
+
+
+
+
+
+
 }

@@ -8,10 +8,12 @@ import java.util.Collection;
 public class Categories {
     private int idCategories;
     private String libelle;
+    private String libelleCapitalized;//
     private int parentSsfamille;
     private SsFamilles ssFamillesByParentSsfamille;//
     private Collection<Produits> produitsByIdCategories;//
     private Collection<SsCategories> ssCategoriesByIdCategories;//
+    private int nbProducts;//
 
     @Id
     @Column(name = "id_categories", nullable = false)
@@ -89,5 +91,23 @@ public class Categories {
 
     public void setSsCategoriesByIdCategories(Collection<SsCategories> ssCategoriesByIdCategories) {
         this.ssCategoriesByIdCategories = ssCategoriesByIdCategories;
+    }
+
+
+    public String getLibelleCapitalized() {
+        return libelleCapitalized;
+    }
+
+    public void setLibelleCapitalized(String libelleCapitalized) {
+        this.libelleCapitalized = libelleCapitalized;
+        this.libelleCapitalized = libelle.substring(0, 1).toUpperCase() + libelle.substring(1).toLowerCase();
+    }
+
+    public int getNbProducts() {
+        return nbProducts;
+    }
+
+    public void setNbProducts(int nbProducts) {
+        this.nbProducts = nbProducts;
     }
 }

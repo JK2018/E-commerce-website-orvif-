@@ -11,6 +11,8 @@ public class SsCategories {
     private Categories categoriesByParentCategorie;
     private int parentCategorie;
     private Collection<Produits> produitsByIdSscategories;
+    private int nbProducts;//
+    private String libelleCapitalized;//
 
     @Id
     @Column(name = "id_sscategories", nullable = false)
@@ -79,5 +81,22 @@ public class SsCategories {
 
     public void setProduitsByIdSscategories(Collection<Produits> produitsByIdSscategories) {
         this.produitsByIdSscategories = produitsByIdSscategories;
+    }
+
+    public int getNbProducts() {
+        return nbProducts;
+    }
+
+    public void setNbProducts(int nbProducts) {
+        this.nbProducts = nbProducts;
+    }
+
+    public String getLibelleCapitalized() {
+        return libelleCapitalized;
+    }
+
+    public void setLibelleCapitalized(String libelleCapitalized) {
+        this.libelleCapitalized = libelleCapitalized;
+        this.libelleCapitalized = libelle.substring(0, 1).toUpperCase() + libelle.substring(1).toLowerCase();
     }
 }

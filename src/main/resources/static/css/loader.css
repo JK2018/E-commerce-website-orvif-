@@ -1,0 +1,23 @@
+#loader .overlay{
+    width:100vw;
+    height:100vh;
+    background-color: #000000a6;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 80002;
+}
+
+#loader .loaderIcon{
+    position : fixed;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    z-index: 80003;
+    color:white;
+}
+
+#keepOnTop{
+    position:absolute;
+    z-index:80001;
+}

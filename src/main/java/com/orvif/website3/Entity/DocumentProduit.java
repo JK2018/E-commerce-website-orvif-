@@ -12,6 +12,11 @@ public class DocumentProduit {
     private int idDocument;
     private int idProduit;
 
+    public DocumentProduit() {
+    }
+
+
+
     @Id
     @Column(name = "id_document", nullable = false)
     public int getIdDocument() {

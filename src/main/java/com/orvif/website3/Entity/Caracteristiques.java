@@ -1,6 +1,8 @@
 package com.orvif.website3.Entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "caracteristiques", schema = "t_orvif_web_dev")
@@ -8,6 +10,9 @@ public class Caracteristiques {
     private int idCaracteristiques;
     private String libelle;
     private byte recherche;
+
+    private List<String> valeurCollection = new ArrayList<>();//
+    private String valeurProduit; //Champ utilise juste pour la fiche produit//
 
     @Id
     @Column(name = "id_caracteristiques", nullable = false)
@@ -59,5 +64,26 @@ public class Caracteristiques {
         result = 31 * result + (libelle != null ? libelle.hashCode() : 0);
         result = 31 * result + (int) recherche;
         return result;
+    }
+/**
+    public List<String> getValeurCollection() {
+        return valeurCollection;
+    }**/
+
+    public void setValeurCollection(List<String> valeurCollection) {
+        this.valeurCollection = valeurCollection;
+    }
+
+    public String getValeurProduit() {
+        return valeurProduit;
+    }
+
+    public void setValeurProduit(String valeurProduit) {
+        this.valeurProduit = valeurProduit;
+    }
+
+    @Transient
+    public List<String> getValeurCollection() {
+        return valeurCollection;
     }
 }

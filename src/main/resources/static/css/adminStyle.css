@@ -1,0 +1,147 @@
+@charset "ISO-8859-1";
+
+.text-center {
+    text-align: center;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+#imgAddBtn, #docAddBtn {
+    cursor: pointer;
+}
+
+.imgAddBtn {
+    width: 100%;
+}
+
+.img-card {
+    max-width: 100%;
+}
+
+.showPdf {
+    width: 100%;
+}
+
+.card-body .col-sm-3:hover .img-card {
+    max-width: 90%;
+    margin: 5%;
+    cursor: pointer;
+}
+
+#showPdf {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1030;
+    background-color: rgba(100, 100, 100, 0.6);
+}
+
+#showPdf .container {
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    height: 80%;
+    position: fixed;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+#showPdf .container .pdfContainer {
+    width: 100%;
+    height: 80%;
+}
+
+#showPdf .container .linkContainer {
+    width: 100%;
+    text-algin: center;
+}
+
+#showImg {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1030;
+    background-color: rgba(100, 100, 100, 0.6);
+}
+
+#containerLoading {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 10000;
+}
+
+#loading {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.34);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#loading .fas {
+    color: white;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#showImg .container {
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    height: 80%;
+    position: fixed;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+#showImg .container .imgContainer {
+    width: 100%;
+    height: 80%;
+}
+
+#showImg .container .imgContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#showImg .container .linkContainer {
+    width: 100%;
+    text-algin: center;
+}
+
+.nodisplay {
+    display: none;
+}
+
+.jobMissionWrapper {
+    display: flex;
+}
+
+#saveSlideshow {
+    display: block;
+    width: 150px;
+    margin: 0 auto 50px;
+}

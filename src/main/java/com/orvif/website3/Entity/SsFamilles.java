@@ -9,6 +9,8 @@ public class SsFamilles {
     private int idSsfamilles;
     private String libelle;
     private String urlImg;
+    private String libelleCapitalized;
+    private String url;
     private Familles famillesByParentFamille;//
     private int parentFamille;
     private Collection<Categories> categoriesByIdSsfamilles;//
@@ -102,5 +104,22 @@ public class SsFamilles {
 
     public void setProduitsByIdSsfamilles(Collection<Produits> produitsByIdSsfamilles) {
         this.produitsByIdSsfamilles = produitsByIdSsfamilles;
+    }
+
+    public String getLibelleCapitalized() {
+        return libelleCapitalized;
+    }
+
+    public void setLibelleCapitalized(String libelleCapitalized) {
+        this.libelleCapitalized = libelleCapitalized;
+        this.libelleCapitalized = libelle.substring(0, 1).toUpperCase() + libelle.substring(1).toLowerCase();
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

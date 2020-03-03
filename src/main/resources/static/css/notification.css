@@ -1,0 +1,32 @@
+#notifications {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 80001;
+}
+
+#notifications .notify {
+    width: 100%;
+    padding: 15px 25px;
+    margin-top: 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#notifications .notify span {
+    width: 80%;
+    display: block;
+    float: left;
+}
+
+#notifications .notify i {
+    float: right;
+    width: 20%;
+    color: #ffffff;
+    text-align: right;
+}
+
+#notifications .notify i:hover {
+    cursor: pointer;
+}

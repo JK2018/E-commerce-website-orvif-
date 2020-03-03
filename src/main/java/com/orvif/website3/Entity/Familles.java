@@ -6,8 +6,11 @@ import java.util.Collection;
 @Entity
 @Table(name = "familles", schema = "t_orvif_web_dev")
 public class Familles {
+    //private static final long serialVersionUID = 3645857340410959882L;
     private int idFamilles;
     private String libelle;
+    private String libelleCapitalized;
+    private String url;
     private Collection<Produits> produitsByIdFamilles;
     private Collection<SsFamilles> ssFamillesByIdFamilles;
 
@@ -67,5 +70,23 @@ public class Familles {
 
     public void setSsFamillesByIdFamilles(Collection<SsFamilles> ssFamillesByIdFamilles) {
         this.ssFamillesByIdFamilles = ssFamillesByIdFamilles;
+    }
+
+
+    public String getLibelleCapitalized() {
+        return libelleCapitalized;
+    }
+
+    public void setLibelleCapitalized(String libelleCapitalized) {
+        this.libelleCapitalized = libelleCapitalized;
+        this.libelleCapitalized = libelle.substring(0, 1).toUpperCase() + libelle.substring(1).toLowerCase();
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

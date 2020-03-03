@@ -1,7 +1,9 @@
 package com.orvif.website3.Entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "marques", schema = "t_orvif_web_dev")
@@ -10,7 +12,8 @@ public class Marques {
     private String nom;
     private String descriptif;
     private Integer idVisuels;
-    private byte display;
+    private boolean display;
+    private Document logo; //
     private Collection<Gammes> gammesByIdMarques;
     private Collection<Produits> produitsByIdMarques;
 
@@ -54,40 +57,13 @@ public class Marques {
         this.idVisuels = idVisuels;
     }
 
-    @Basic
-    @Column(name = "display", nullable = false)
-    public byte getDisplay() {
+
+    public boolean isDisplay() {
         return display;
     }
 
-    public void setDisplay(byte display) {
+    public void setDisplay(boolean display) {
         this.display = display;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Marques marques = (Marques) o;
-
-        if (idMarques != marques.idMarques) return false;
-        if (display != marques.display) return false;
-        if (nom != null ? !nom.equals(marques.nom) : marques.nom != null) return false;
-        if (descriptif != null ? !descriptif.equals(marques.descriptif) : marques.descriptif != null) return false;
-        if (idVisuels != null ? !idVisuels.equals(marques.idVisuels) : marques.idVisuels != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idMarques;
-        result = 31 * result + (nom != null ? nom.hashCode() : 0);
-        result = 31 * result + (descriptif != null ? descriptif.hashCode() : 0);
-        result = 31 * result + (idVisuels != null ? idVisuels.hashCode() : 0);
-        result = 31 * result + (int) display;
-        return result;
     }
 
     @OneToMany(mappedBy = "marquesByIdMarques")
@@ -106,5 +82,59 @@ public class Marques {
 
     public void setProduitsByIdMarques(Collection<Produits> produitsByIdMarques) {
         this.produitsByIdMarques = produitsByIdMarques;
+    }
+
+
+    @Transient
+    public Document getLogo() {
+        return logo;
+    }
+
+    public void setLogo(Document logo) {
+        this.logo = logo;
+    }
+
+
+
+    @Transient
+    public ArrayList<Marques> getAll(){
+        ArrayList<Marques> ret = new ArrayList<>();
+        return ret;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Marques{" +
+                "idMarques=" + idMarques +
+                ", nom='" + nom + '\'' +
+                ", descriptif='" + descriptif + '\'' +
+                ", idVisuels=" + idVisuels +
+                ", display=" + display +
+                ", logo=" + logo +
+                ", gammesByIdMarques=" + gammesByIdMarques +
+                ", produitsByIdMarques=" + produitsByIdMarques +
+                '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Marques marques = (Marques) o;
+        return idMarques == marques.idMarques &&
+                display == marques.display &&
+                Objects.equals(nom, marques.nom) &&
+                Objects.equals(descriptif, marques.descriptif) &&
+                Objects.equals(idVisuels, marques.idVisuels) &&
+                Objects.equals(logo, marques.logo) &&
+                Objects.equals(gammesByIdMarques, marques.gammesByIdMarques) &&
+                Objects.equals(produitsByIdMarques, marques.produitsByIdMarques);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idMarques, nom, descriptif, idVisuels, display, logo, gammesByIdMarques, produitsByIdMarques);
     }
 }

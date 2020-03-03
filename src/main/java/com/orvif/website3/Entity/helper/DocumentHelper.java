@@ -1,0 +1,77 @@
+package com.orvif.website3.Entity.helper;
+
+import com.orvif.website3.Entity.Document;
+import com.orvif.website3.Repository.DAOException;
+import com.orvif.website3.Repository.DocumentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Component
+public class DocumentHelper {
+
+
+
+    @Autowired
+    private DocumentRepository dr;
+
+
+    public DocumentHelper() {
+    }
+
+    // possible error in query
+    public Map<String, List<Document>> getDocumentListByProduit(int id) {
+        Map<String, List<Document>> ret = new HashMap<>();
+        List<Document> listImg = new ArrayList<>();
+        List<Document> listOther = new ArrayList<>();
+        List<Document> dList = new ArrayList<>();
+        try {
+            dList = dr.getDocumentListByProduit(id);
+            for (Document tDoc : dList) {
+                if (tDoc.getType().equals("image")) {
+                    listImg.add(tDoc);
+                } else {
+                    listOther.add(tDoc);
+                }
+            }
+            ret.put("imageCollection", listImg);
+            ret.put("otherCollection", listOther);
+        } catch (Exception e) {
+            throw new DAOException("Une erreur est survenue : " + e.getMessage());
+        }
+        return ret;
+    }
+
+
+
+
+    public Document getLogoMarque(int id) {
+        Document ret = null;
+        try {
+            ret = dr.getLogoMarques(id);
+        } catch (Exception e) {
+            throw new DAOException("Une erreur est survenue : " + e.getMessage());
+        }
+        return ret;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

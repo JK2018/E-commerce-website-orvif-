@@ -1,0 +1,51 @@
+#overlay-productAdded{
+    position:fixed;
+    background-color: #0000008c;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:9999;
+}
+
+#modal-productAdded{
+    max-width: 95%;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index: 10000;
+    background: white;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding : 25px;
+    border : 2px solid #283480;
+}
+
+#modal-productAdded img{
+    max-height: 100%;
+    margin-right: 25px;
+}
+
+#modal-productAdded p{
+    margin-right: 25px;
+}
+
+#modal-productAdded span.red{
+    color:#DC2E38;
+}
+
+#modal-productAdded>div{
+    margin-right: 25px;
+}
+
+#modal-productAdded>div>button,#modal-productAdded>div>a{
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+#modal-productAdded>div>a{
+    margin-top:20px;
+}
