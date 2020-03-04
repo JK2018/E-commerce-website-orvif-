@@ -5,7 +5,7 @@
 <c:set scope="request" var="titleSubtop" value="Nos marques"/>
 <c:set scope="request" var="arianeSubtop" value="Accueil > Nos marques"/>
 <c:import url="header.jsp"/>
-<h1 id="titleBrands">Nos partenaires</h1>
+
 <!-- <p id="textBrands">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consequatur, culpa cum cupiditate
 dignissimos
 distinctio eum facilis in iusto labore laboriosam minus molestias pariatur quo suscipit ut velit, veritatis

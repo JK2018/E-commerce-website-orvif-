@@ -435,6 +435,7 @@ public class Produits {
         return (float) ((int) ((prix + (prix * 0.2)) * 100)) / 100;
     }
 
+
     @Transient
     public boolean isVisible() {
         return visible;

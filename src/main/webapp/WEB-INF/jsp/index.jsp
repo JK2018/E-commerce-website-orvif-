@@ -84,7 +84,8 @@
                         <span id="productNotAvailable">Club avantages !</span>
                     </c:if>
                 </div>
-                <p class="libelle">${ produit.libelle }</p>
+                <div class="libPrix">
+                <p class="libelle" style="text-transform: capitalize">${fn:toLowerCase(produit.libelle)}</p>
                 <p class="price">
                     <c:choose>
                         <%-- -------------------- NOT PARTICULIER ------------------- --%>
@@ -93,11 +94,11 @@
                             <c:choose>
                                 <c:when test="${fn:length(group.products) == 1}">
                                     Prix HT: <br/><span
-                                        class="font-red">${ produit.ppht }&euro;</span>
+                                        class="font-red"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ produit.ppht }"/>&euro;</span>
                                 </c:when>
                                 <c:otherwise>
                                     Prix HT: <br/><span
-                                        class="font-red">${ group.minPriceHT } - ${ group.maxPriceHT }&euro;</span>
+                                        class="font-red"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ group.minPriceHT }"/> - <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ group.maxPriceHT }"/>&euro;</span>
                                 </c:otherwise>
                             </c:choose>
                         </c:when>
@@ -107,17 +108,18 @@
                                 <%-- if single product --%>
                                 <c:when test="${fn:length(group.products) == 1}">
                                     Prix TTC: <br/><span
-                                        class="font-red">${ produit.ppttc }&euro;</span>
+                                        class="font-red"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ produit.ppttc }"/>&euro;</span>
                                 </c:when>
                                 <%-- if several product (diff size etc) --%>
                                 <c:otherwise>
                                     Prix TTC: <br/><span
-                                        class="font-red">${ group.minPriceTTC } - ${ group.maxPriceTTC }&euro;</span>
+                                        class="font-red"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ group.minPriceTTC }"/> - <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ group.maxPriceTTC }"/>&euro;</span>
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
                     </c:choose>
                 </p>
+                </div>
                 <div class="group-btn">
                     <a class="button red detailBtn" href="P${produit.idProduits }__${produit.libelleUrl}">+ de
                         d&eacute;tails</a>
@@ -169,7 +171,8 @@
                         <span id="productNotAvailable">Club avantages !</span>
                     </c:if>
                 </div>
-                <p class="libelle">${ produit.libelle }</p>
+                <div class="libPrix">
+                <p class="libelle" style="text-transform: capitalize">${fn:toLowerCase(produit.libelle)}</p>
                 <p class="price">
                     <c:choose>
                         <c:when
@@ -177,11 +180,11 @@
                             <c:choose>
                                 <c:when test="${fn:length(group.products) == 1}">
                                     Prix HT: <br/><span
-                                        class="font-red">${ produit.ppht }&euro;</span>
+                                        class="font-red"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ produit.ppht }"/>&euro;</span>
                                 </c:when>
                                 <c:otherwise>
                                     Prix HT: <br/><span
-                                        class="font-red">${ group.minPriceHT } - ${ group.maxPriceHT }&euro;</span>
+                                        class="font-red"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ group.minPriceHT }"/> - <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ group.maxPriceHT }"/>&euro;</span>
                                 </c:otherwise>
                             </c:choose>
                         </c:when>
@@ -189,16 +192,17 @@
                             <c:choose>
                                 <c:when test="${fn:length(group.products) == 1}">
                                     Prix TTC: <br/><span
-                                        class="font-red">${ produit.ppttc }&euro;</span>
+                                        class="font-red"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ produit.ppttc }"/>&euro;</span>
                                 </c:when>
                                 <c:otherwise>
                                     Prix TTC: <br/><span
-                                        class="font-red">${ group.minPriceTTC } - ${ group.maxPriceTTC }&euro;</span>
+                                        class="font-red"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ group.minPriceTTC }"/> - <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ group.maxPriceTTC }"/>&euro;</span>
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
                     </c:choose>
                 </p>
+                </div>
                 <div class="group-btn">
                     <a class="button red detailBtn" href="P${produit.idProduits }__${produit.libelleUrl}">+ de
                         d&eacute;tails</a>
@@ -249,7 +253,8 @@
                         <span id="productNotAvailable">Club avantages !</span>
                     </c:if>
                 </div>
-                <p class="libelle">${ produit.libelle }</p>
+                <div class="libPrix">
+                <p class="libelle" style="text-transform: capitalize">${fn:toLowerCase(produit.libelle)}</p>
                 <p class="price">
                     <c:choose>
                         <c:when
@@ -257,11 +262,11 @@
                             <c:choose>
                                 <c:when test="${fn:length(group.products) == 1}">
                                     Prix HT: <br/><span
-                                        class="font-red">${ produit.ppht }&euro;</span>
+                                        class="font-red"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ produit.ppht }"/>&euro;</span>
                                 </c:when>
                                 <c:otherwise>
                                     Prix HT: <br/><span
-                                        class="font-red">${ group.minPriceHT } - ${ group.maxPriceHT }&euro;</span>
+                                        class="font-red"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ group.minPriceHT }"/> - <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ group.maxPriceHT }"/>&euro;</span>
                                 </c:otherwise>
                             </c:choose>
                         </c:when>
@@ -269,16 +274,17 @@
                             <c:choose>
                                 <c:when test="${fn:length(group.products) == 1}">
                                     Prix TTC: <br/><span
-                                        class="font-red">${ produit.ppttc }&euro;</span>
+                                        class="font-red"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ produit.ppttc }"/>&euro;</span>
                                 </c:when>
                                 <c:otherwise>
                                     Prix TTC: <br/><span
-                                        class="font-red">${ group.minPriceTTC } - ${ group.maxPriceTTC }&euro;</span>
+                                        class="font-red"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ group.minPriceTTC }"/> - <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${ group.maxPriceTTC }"/>&euro;</span>
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
                     </c:choose>
                 </p>
+                </div>
                 <div class="group-btn">
                     <a class="button red detailBtn" href="P${produit.idProduits }__${produit.libelleUrl}">+ de
                         d&eacute;tails</a>

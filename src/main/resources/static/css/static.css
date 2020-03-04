@@ -58,7 +58,7 @@ button.asText:hover {
 }
 
 .productCard.disabled {
-    background-color: #eaebef !important;
+    background-color: #FFFFFF;
 }
 
 p.productNotAvailable {
@@ -473,9 +473,10 @@ p.productNotAvailable {
 }
 
 #footer .middle ul li.bigItem {
-    font-size: 25px;
+    font-size: 0.9em;
     color: #636363;
     text-transform: uppercase;
+    margin-top: 10px;
 }
 
 #footer .bottom {
@@ -796,12 +797,14 @@ p.productNotAvailable {
     width: 19%;
     background-color: #FFFFFF;
     border-radius: 4px;
+    padding-bottom: 4px;
     box-shadow: 0 0 8px 1px #c5c0c0;
-    height: 24vw;
+    height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     color: #414141 !important;
+    position: relative;
 }
 
 .bandeauProduit .products .productCard .imgProd {
@@ -819,21 +822,37 @@ p.productNotAvailable {
     max-width: 80%;
 }
 
+.bandeauProduit .products .productCard .libPrix {
+    height: 150px;
+    position: relative;
+
+}
+
 .bandeauProduit .products .productCard .libelle {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
     text-align: center;
     font-weight: bold;
-    font-size: 1.2em;
-    display: flex;
+    font-size: 0.9em;
     align-items: center;
-    justify-content: center;
+    position: absolute;
+    top: 0px;
+
 }
 
 .bandeauProduit .products .productCard .price {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     text-align: center;
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 0.9em;
+    padding-bottom: 3px;
+    position: absolute;
+    bottom: 0px;
 }
 
 .bandeauProduit .products .productCard .group-btn {

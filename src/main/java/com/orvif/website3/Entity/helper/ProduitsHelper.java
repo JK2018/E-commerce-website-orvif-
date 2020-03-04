@@ -12,8 +12,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.Logger;
 import static java.lang.Math.round;
@@ -185,6 +188,7 @@ public class ProduitsHelper {
      * called in Produits
      * needed for method randGrp()
      */
+    // METHOD WORKS prices fetched will be HT if cleClient != 1 , or TTC if cleClient = 1 (particulier)
     public void getProductsInfoFromNxGroup(List<Groupe> groupes, String cleClient) {
         // Construction du parametre pour le webservice appel_multiple
         StringBuilder params = new StringBuilder("wn_tarif_site-");
@@ -198,35 +202,43 @@ public class ProduitsHelper {
                     params.append(",").append(cleClient).append("_").append(String.valueOf(p.getCleSystem()));
                 }
             }
-        }
+        }// builds params string
         try {
             List<Produits> pToRemove = new ArrayList<>();
             String webService = "appel_multiple_xml " + params;
+    //System.out.println(webService + ": webservice test");
             MCrypt mcrypt = new MCrypt();
             String encrypted = MCrypt.bytesToHex(mcrypt.encrypt(webService));
-            Logger.getLogger(ProduitsRepository.class.getName()).info(encrypted);
-            Document result = df.execWebService(webService); // <---------------------------- prob in daoFactory -- fixed (casts / imports)
+    //System.out.println(encrypted + ": webservice encrypted test");
+            Logger.getLogger(ProduitsHelper.class.getName()).info(encrypted);//slaps the encrypted in an info msg?????
+            Document result = df.execWebService(webService);
             Element racine = (Element) result.getDocumentElement();
+    //System.out.println(racine.getNodeName() + ": node name test");
             // En theorie, la racine ne peux pas etre differente de "RETOURS"
             if (racine.getNodeName().equals("RETOURS")) {
                 NodeList noeuds = racine.getChildNodes();
-                for (Groupe groupe : groupes) {
+                for (Groupe groupe : groupes) { // for each grp of products
                     for (Produits p : groupe.getProducts()) {
                         for (int j = 0; j < noeuds.getLength(); j++) {
                             Element unRetour = (Element) noeuds.item(j);
                             String cleSystem = unRetour.getElementsByTagName("CLESYSTEM").item(0).getTextContent();
-                            // Recuperation des produits complementaires
+    //System.out.println(cleSystem + ": cleSystem for each prod");
+                            // etienne : Recuperation des produits complementaires
                             if (cleSystem.equals(String.valueOf(p.getCleSystem()))) {
-                                try {
+                                try {//si il y a des produits complementaires :
                                     Node complementary = unRetour.getElementsByTagName("COMPLEMENTAIRES").item(0);
+    //System.out.println(complementary + ": node complementary for each prod");
                                     if (complementary.getChildNodes().getLength() > 0) {
                                         for (int k = 0; k < complementary.getChildNodes().getLength(); k++) {
                                             Element compProd = (Element) complementary.getChildNodes().item(k);
                                             String cleSysytem = compProd.getElementsByTagName("CLE").item(0)
                                                     .getTextContent();
+    //System.out.println(cleSysytem + ": clesysyteme");
                                             Produits pComp = this.pr.findByCleSystem(Integer.parseInt(cleSysytem));
+    //System.out.println(pComp.getLibelle() + ": prod comp");
                                             if (pComp != null) {
                                                 pComp.setPpht(Float.parseFloat(compProd.getElementsByTagName("PRIXNET").item(0).getTextContent()));
+                                                pComp.setPpttc(getPrixTTCFromHT(Float.parseFloat(compProd.getElementsByTagName("PRIXNET").item(0).getTextContent())));///////////////
                                                 pComp.setEcoMobilier((double) Float.parseFloat(compProd.getElementsByTagName("ECOMOBI").item(0).getTextContent()));
                                                 pComp.setEcoPart((double) Float.parseFloat(compProd.getElementsByTagName("ECODEEE").item(0).getTextContent()));
                                                 int nb = Integer.parseInt(compProd.getElementsByTagName("NB").item(0).getTextContent());
@@ -272,12 +284,21 @@ public class ProduitsHelper {
                                             }
                                         }
                                     }
-                                    p.setPpht(Float
-                                            .parseFloat(unRetour.getElementsByTagName("PRIXNET").item(0).getTextContent()));
-                                    p.setEcoPart((double) Float
-                                            .parseFloat(unRetour.getElementsByTagName("ECODEEE").item(0).getTextContent()));
-                                    p.setEcoMobilier((double) Float
-                                            .parseFloat(unRetour.getElementsByTagName("ECOMOBI").item(0).getTextContent()));
+                                    // PAS DE PRODUITS COMPLEMENTAIRES
+
+    ///////////////to see all elem tagnames///////////////
+   /** NodeList nodeList=unRetour.getElementsByTagName("*");
+    for (int x=0; x<nodeList.getLength(); x++)
+    {
+        // Get element
+        Element element = (Element)nodeList.item(x);
+        System.out.println(element.getNodeName());
+    }**////////////////////////////////////////////////////
+
+                                    p.setPpht(Float.parseFloat(unRetour.getElementsByTagName("PRIXNET").item(0).getTextContent()));
+                                    p.setPpttc(getPrixTTCFromHT(Float.parseFloat(unRetour.getElementsByTagName("PRIXNET").item(0).getTextContent())));///////////////
+                                    p.setEcoPart((double) Float.parseFloat(unRetour.getElementsByTagName("ECODEEE").item(0).getTextContent()));
+                                    p.setEcoMobilier((double) Float.parseFloat(unRetour.getElementsByTagName("ECOMOBI").item(0).getTextContent()));
                                     p.setDefi(unRetour.getElementsByTagName("DEFI").item(0).getTextContent().equals("OUI"));
                                     /////GETTING STOCKS/////
                                     Node stocks = unRetour.getElementsByTagName("STOCK").item(0);
@@ -326,7 +347,8 @@ public class ProduitsHelper {
                     }
                 }
                 //TODO ICI
-                for (Produits p : pToRemove) {
+                for (Produits p : pToRemove) { // deletes pToRemove from groupes
+                    System.out.println(p.getLibelle() + "prods to remove");
                     boolean found = false;
                     boolean deleteGroup = false;
                     for (Groupe groupe : groupes) {
@@ -348,9 +370,11 @@ public class ProduitsHelper {
                         }
                     }
                 }
-                for (Groupe g : groupes) {
+                for (Groupe g : groupes) {// for each groupe of identical prods   /   NO PARTICULIER TTC PRICE!
                     double minGroup = 9999999;
                     double maxGroup = 0;
+                    double minGroupTtc = 9999999;
+                    double maxGroupTtc = 0;
                     for (Produits p : g.getProducts()) {
                         if (p.getPpht() < minGroup && p.getPpht() > 0) {
                             minGroup = p.getPpht();
@@ -358,9 +382,19 @@ public class ProduitsHelper {
                         if (p.getPpht() > maxGroup) {
                             maxGroup = p.getPpht();
                         }
+
+
+                        if (p.getPpttc() < minGroupTtc && p.getPpttc() > 0) {
+                            minGroupTtc = p.getPpttc();
+                        }
+                        if (p.getPpttc() > maxGroupTtc) {
+                            maxGroupTtc = p.getPpttc();
+                        }
                     }
                     g.setMaxPriceHT(maxGroup);
                     g.setMinPriceHT(minGroup);
+                    g.setMaxPriceTTC(maxGroupTtc);
+                    g.setMinPriceTTC(minGroupTtc);
                 }
             } else {
                 // TODO error
@@ -1150,10 +1184,10 @@ public class ProduitsHelper {
     public List<Groupe> getRandomGroups(int number, String cleClient) throws DAOException {
         try {
             List<Groupe> groupes = new ArrayList<>();
-            List<Produits> listProd = new ArrayList<>();
-            listProd = pr.getRandomGroups2(number);
             Groupe currentGroupe = null;
-            for(Produits tProd : listProd) {
+            List<Produits> listProd = pr.getRandomGroups2(number);
+
+            for(Produits tProd : listProd) { // for each prod
                 int codeArticle = tProd.getCodeArticle();
                 tProd.setDestockage(tProd.isDestockage() == true);
                 if (currentGroupe == null || currentGroupe.getId() != codeArticle) {
@@ -1161,17 +1195,17 @@ public class ProduitsHelper {
                         groupes.add(currentGroupe);
                     }
                     currentGroupe = new Groupe();
-                    currentGroupe.setId(codeArticle);
+                    currentGroupe.setId(codeArticle);//adds a groupe to the groupes array with its id = codearticle
                     List<com.orvif.website3.Entity.Document> documents = new ArrayList<>();
-                    documents.add(dr.getFirstImageByProduct(tProd.getIdProduits()));
-                    tProd.setImageCollection(documents);
+                    documents.add(dr.getFirstImageByProduct(tProd.getIdProduits()));// gets a document obj for one img
+                    tProd.setImageCollection(documents);// sets that img as imgCollection of each prod
                 }
                 currentGroupe.getProducts().add(tProd);
-            }
+            } // end each prod
             if (currentGroupe != null) {
                 groupes.add(currentGroupe);
             }
-            getProductsInfoFromNxGroup(groupes, cleClient);
+            getProductsInfoFromNxGroup(groupes, cleClient);/////////////////////////
             return groupes;
         } catch (DAOException e) {
             throw e;
@@ -1686,8 +1720,9 @@ public class ProduitsHelper {
     }
 
 
-
-
+    public float getPrixTTCFromHT(float prix) {
+        return (float) ((int) ((prix + (prix * 0.2)) * 100)) / 100;
+    }
 
 
 

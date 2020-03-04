@@ -19,7 +19,7 @@ public interface ProduitsRepository extends JpaRepository<Produits, Integer> {
 //add produit OK ! make sure it is updated if the product already exists
 //("SELECT * FROM PRODUITS WHERE codeArticle IN (SELECT * FROM (SELECT DISTINCT(codeArticle) FROM PRODUITS LIMIT 5," + number + ")as t) ORDER BY codeArticle;");
 
-
+//trouve tt les prods dont leurs code article figure parmis la list des 5 code articles.
     @Query(value = "SELECT id_produits, cle_system, code_orvif, ref_fournisseur, libelle, descriptif, avantages, ppht, eco_part, eco_mobilier," +
             " id_marques, id_uv, id_uf, id_familles, id_ssfamilles, id_categories, id_sscategories, id_gammes, visible, code_article, available, " +
             "defi, destockage, libelle_url, obligatoire, ppht_public, ppttc, ppttc_public " +
