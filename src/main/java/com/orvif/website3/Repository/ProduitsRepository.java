@@ -127,6 +127,9 @@ public interface ProduitsRepository extends JpaRepository<Produits, Integer> {
 
 
 
+    // for method  add in produitshelper
+    @Query(value = "SELECT id_produits FROM PRODUITS WHERE cle_system = :cle_system AND id_familles = :id_familles AND id_ssfamilles = :id_ssfamilles AND id_categories = :id_categories AND id_sscategories = :id_sscategories", nativeQuery = true)
+    int add(@Param("cle_system") int cle_system, @Param("id_familles") int id_familles, @Param("id_ssfamilles") int id_ssfamilles, @Param("id_categories") int id_categories, @Param("id_sscategories") int id_sscategories);
 
 
 

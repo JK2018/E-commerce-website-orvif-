@@ -9,7 +9,7 @@ import java.util.List;
 public class Caracteristiques {
     private int idCaracteristiques;
     private String libelle;
-    private byte recherche;
+    private int recherche;
 
     private List<String> valeurCollection = new ArrayList<>();//
     private String valeurProduit; //Champ utilise juste pour la fiche produit//
@@ -36,11 +36,11 @@ public class Caracteristiques {
 
     @Basic
     @Column(name = "recherche", nullable = false)
-    public byte getRecherche() {
+    public int getRecherche() {
         return recherche;
     }
 
-    public void setRecherche(byte recherche) {
+    public void setRecherche(int recherche) {
         this.recherche = recherche;
     }
 

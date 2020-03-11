@@ -60,4 +60,9 @@ public class Newsletter {
         result = 31 * result + (prenom != null ? prenom.hashCode() : 0);
         return result;
     }
+
+
+
+
+
 }

@@ -7,6 +7,10 @@ import com.orvif.website3.Repository.MarquesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -75,7 +79,37 @@ private DocumentHelper dh;
 
 
 
+    public Marques getById(int id) {
+        Marques ret = null;
+        try {
+            ret = mr.getById(id);
+            if (ret.getLogo() != dr.getLogoMarques(ret.getIdMarques())) {
+                ret.setLogo(dr.getLogoMarques(ret.getIdMarques()));
+            }
+        } catch (Exception e) {
+            throw new DAOException("Une erreur est survenue : " + e.getMessage());
+        }
+        return ret;
+    }
 
+
+
+
+    public void add(Marques marque1) throws DAOException {
+        try {
+            if (marque1.getLogo() != null) {
+                int idvis = marque1.getLogo().getId();
+                mr.add(idvis,marque1.getNom(), marque1.isDisplay() );
+            } else {
+                mr.add2(marque1.getNom(), marque1.isDisplay() );
+
+            }
+        } catch (DAOException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new DAOException(e.getClass().getName() + " exception when adding brand.");
+        }
+    }
 
 
 

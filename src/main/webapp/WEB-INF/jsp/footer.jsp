@@ -69,6 +69,9 @@
 <script type="text/javascript" src="js/notification.js"></script>
 <script type="text/javascript" src="js/notificationProductAdded.js"></script>
 <script type="text/javascript" src="js/generalJs.js"></script>
+<script type="text/javascript" src="js/productSheet.js"></script>
+<script type="text/javascript" src="js/openStreetMapSelection.js"></script>
+<script type="text/javascript" src="js/adminJs.js"></script>
 <script type="text/javascript"
         src="//cdn.rawgit.com/icons8/bower-webicon/v0.10.7/jquery-webicon.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"

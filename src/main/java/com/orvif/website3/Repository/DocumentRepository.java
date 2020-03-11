@@ -14,6 +14,12 @@ import java.util.List;
 public interface DocumentRepository extends JpaRepository<Document, Integer> {
 
 
+    @Query(value = "SELECT * FROM DOCUMENT WHERE url = :url AND type = 'image'", nativeQuery = true)
+    Document getPictureByLink( @Param("url") String url);
+
+
+    @Query(value = "SELECT * FROM DOCUMENT WHERE type = 'catalogue'", nativeQuery = true)
+    ArrayList<Document> getCatalogues();
 
 
     @Query(value = "SELECT * FROM DOCUMENT WHERE id = (SELECT id_document FROM DOCUMENT_PRODUIT WHERE id_produit = :theId LIMIT 1)", nativeQuery = true)

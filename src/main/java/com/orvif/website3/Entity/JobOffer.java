@@ -14,7 +14,7 @@ public class JobOffer {
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

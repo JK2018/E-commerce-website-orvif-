@@ -14,8 +14,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.math.BigDecimal;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.Logger;
@@ -89,6 +91,69 @@ public class ProduitsHelper {
 
     public ProduitsHelper() {
     }
+
+
+
+
+
+
+    public boolean add(Produits p) {
+        boolean ret = true;
+        try {
+            int i = 0;
+            i = pr.add(p.getCleSystem(), p.getIdFamilles(), p.getIdSsfamilles(), p.getIdCategories(), p.getIdSscategories());
+            pr.flush();
+            if (i!=0) {
+                //Le produit existe, on le met à jour seulement. Pas d'ajout
+//				preparedStmt = connexion.prepareStatement("UPDATE PRODUITS SET cle_system = ?, code_orvif = ?, ref_fournisseur = ?, libelle = ?, descriptif = ?, avantages = ?, id_marques = ?, id_uv = ?, id_uf = ?, id_familles = ?, id_ssfamilles = ?, id_categories = ?, id_sscategories = ?, id_gammes = ?, visible = ?, codeArticle = ? WHERE id_produits = ?");
+//				preparedStmt.setInt(1, p.getCleSystem());
+//				preparedStmt.setString(2, p.getCodeOrvif());
+//				preparedStmt.setString(3, p.getRefFournisseur());
+//				preparedStmt.setString(4, p.getLibelle());
+//				preparedStmt.setString(5, p.getDescriptif());
+//				preparedStmt.setString(6, p.getAvantages());
+//				preparedStmt.setInt(7, p.getMarque().getId());
+//				preparedStmt.setInt(8, p.getUniteVente().getId());
+//				preparedStmt.setInt(9, p.getUniteFacturation().getId());
+//				preparedStmt.setInt(10, p.getFamille().getId());
+//				preparedStmt.setInt(11, p.getSousFamille().getId());
+//				preparedStmt.setInt(12, p.getCategorie().getId());
+//				preparedStmt.setInt(13, p.getSousCategorie().getId());
+//				if (p.getGamme() == null) {
+//					preparedStmt.setString(14, null);
+//				} else {
+//					preparedStmt.setInt(14, p.getGamme().getId());
+//				}
+//				if (p.isVisible()) {
+//					preparedStmt.setInt(15, 1);
+//				} else {
+//					preparedStmt.setInt(15, 0);
+//				}
+//				preparedStmt.setString(16, p.getCodeArticle());
+//				preparedStmt.setInt(17, resultat.getInt("id_produits"));
+//				preparedStmt.executeUpdate();
+//				return true;
+                return true;
+            } else {
+                //Produit non existant, on le crée
+                p.setPpht(0);
+                p.setEcoPart((double)0);
+                p.setEcoMobilier((double)0);
+                p = pr.save(p);
+                pr.flush();
+            }
+        } catch (DAOException e) {
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DAOException(e.getClass().getName() + " error occured when trying to add product.");
+        }
+        return ret;
+    }
+
+
+
+
 
 
     /**
@@ -1116,6 +1181,23 @@ public class ProduitsHelper {
     }
 
 
+
+    public boolean removeProduct(int idProduit) {
+        boolean ret;
+        PreparedStatement preparedStmt = null;
+        try {
+            Produits p = pr.findById(idProduit).get();
+            pr.delete(p);
+            pr.flush();
+            ret = true;
+        } catch (Exception e) {
+            throw new DAOException("Une erreur est survenue : " + e.getMessage());
+        }
+        return ret;
+    }
+
+
+
     // possibleflush / @transactionnal error
     @Transactional
     public boolean addProdAssocie(int p, int pAssoc) {
@@ -1351,7 +1433,7 @@ public class ProduitsHelper {
             boolean firstLine = true;
             for(Produits tProd : lProd){
                 tProd.setDestockage(tProd.isDestockage()==true);
-                if (firstLine) {
+                if (firstLine) { //because same info for all prods in that grp
                     //Recuperation des docs/images
                     Map<String, List<com.orvif.website3.Entity.Document>> map = dh.getDocumentListByProduit(tProd.getIdProduits());
                     tProd.setMarquesByIdMarques(mr.getById(tProd.getIdMarques()));
@@ -1700,7 +1782,6 @@ public class ProduitsHelper {
     @Transactional
     public boolean update(Produits p, String modificateur) {
         boolean ret = false;
-
         try {
             Produits lastP = this.getByIdAdmin(p.getIdProduits());
             List<HistoriqueModification> modifs = p.genererHistorique(lastP, gr, catr, scatr, fr, sfr, mr, ufr, uvr);
@@ -1715,7 +1796,6 @@ public class ProduitsHelper {
         } catch (Exception e) {
             throw new DAOException("Une erreur est survenue : " + e.getMessage());
         }
-
         return ret;
     }
 
@@ -1740,7 +1820,20 @@ public class ProduitsHelper {
 
 
 
-
+    public Map<String, Integer> getStockCapitalized(Produits p) {
+        Map<String, Integer> stocksCapitalized = new HashMap<>();
+        for (Map.Entry<String, Integer> s : p.getStocks().entrySet()) {
+            if (s.getKey().equals("LCDR"))
+                continue;
+            if (s.getKey().equals("ORLY")) {
+                stocksCapitalized.put("Drive Orly", s.getValue());
+                continue;
+            }
+            String key = s.getKey().substring(0, 1).toUpperCase() + s.getKey().substring(1).toLowerCase();
+            stocksCapitalized.put(key, s.getValue());
+        }
+        return stocksCapitalized;
+    }
 
 
 

@@ -1,11 +1,14 @@
 package com.orvif.website3.Entity;
 
+import com.orvif.website3.Entity.helper.UtilisateursHelper;
 import com.orvif.website3.bean.Encours;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "utilisateurs", schema = "t_orvif_web_dev")
@@ -34,6 +37,11 @@ public class Utilisateurs {
     private String salt2;
     private Profils profilsByProfil;//
     private List<Adresse> adresseCollection = new ArrayList<>();//
+
+    @Autowired
+    private UtilisateursHelper uh;
+
+
 
     @Id
     @Column(name = "id_utilisateurs", nullable = false)
@@ -85,8 +93,7 @@ public class Utilisateurs {
         this.mdp = mdp;
     }
 
-    @Basic
-    @Column(name = "profil", nullable = false, insertable = false, updatable = false)
+    @Column(name = "profil", insertable = false, updatable = false)
     public int getProfil() {
         return profil;
     }
@@ -94,6 +101,8 @@ public class Utilisateurs {
     public void setProfil(int profil) {
         this.profil = profil;
     }
+
+
 
     @Basic
     @Column(name = "salt1", nullable = false, length = 10)
@@ -136,15 +145,7 @@ public class Utilisateurs {
 
     @Override
     public int hashCode() {
-        int result = idUtilisateurs;
-        result = 31 * result + (nom != null ? nom.hashCode() : 0);
-        result = 31 * result + (prenom != null ? prenom.hashCode() : 0);
-        result = 31 * result + (login != null ? login.hashCode() : 0);
-        result = 31 * result + (mdp != null ? mdp.hashCode() : 0);
-        result = 31 * result + profil;
-        result = 31 * result + (salt1 != null ? salt1.hashCode() : 0);
-        result = 31 * result + (salt2 != null ? salt2.hashCode() : 0);
-        return result;
+        return Objects.hash(idUtilisateurs, numCli, lastSignin, mail, type_client, etat, telephone, numeroSiren, nomSociete, companyAdress, encours, bloqued, closed, verifiedMail, nom, prenom, login, mdp, profil, salt1, salt2, profilsByProfil, adresseCollection, uh);
     }
 
     @ManyToOne
@@ -285,4 +286,30 @@ public class Utilisateurs {
     public void setAdresseCollection(List<Adresse> adresseCollection) {
         this.adresseCollection = adresseCollection;
     }
+
+
+
+
+
+
+
+    public boolean resetPassword(int client, String psw, String salt1, String salt2) {
+        boolean ret = uh.resetPassword(client, psw, salt1, salt2);
+        return ret;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

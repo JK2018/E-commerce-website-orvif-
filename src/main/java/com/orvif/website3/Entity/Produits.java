@@ -68,10 +68,19 @@ public class Produits {
     private Integer idGammes;
     private Collection<Groupe> groupesByIdProduits;//
     private Collection<LignePanier> lignePaniersByIdProduits;//
+    private Map<String, Integer> stockCapitalized;
 
     @Autowired
     private ProduitsHelper ph; // = new ProduitsHelper();
 
+    @Transient
+    public Map<String, Integer> getStockCapitalized() {
+        return stockCapitalized;
+    }
+
+    public void setStockCapitalized(Map<String, Integer> stockCapitalized) {
+        this.stockCapitalized = stockCapitalized;
+    }
 
     @Id
     @Column(name = "id_produits", nullable = false)
@@ -188,26 +197,6 @@ public class Produits {
     @Column(name = "visible", nullable = false)
     public boolean getVisible() {
         return visible;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Produits other = (Produits) obj;
-        return idProduits == other.idProduits;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + idProduits;
-        return result;
     }
 
     @ManyToOne
@@ -435,6 +424,31 @@ public class Produits {
         return (float) ((int) ((prix + (prix * 0.2)) * 100)) / 100;
     }
 
+    public int getCode_article() {
+        return code_article;
+    }
+
+    public void setCode_article(int code_article) {
+        this.code_article = code_article;
+    }
+
+    @Transient
+    public List<HistoriqueModification> getHistoriqueModification() {
+        return historiqueModification;
+    }
+
+    public void setHistoriqueModification(List<HistoriqueModification> historiqueModification) {
+        this.historiqueModification = historiqueModification;
+    }
+
+    @Transient
+    public Groupe getGroupe() {
+        return groupe;
+    }
+
+    public void setGroupe(Groupe groupe) {
+        this.groupe = groupe;
+    }
 
     @Transient
     public boolean isVisible() {
@@ -446,7 +460,10 @@ public class Produits {
     }
 
 
-    public String getLibelleUrl() {
+
+    public String getLibelleUrl() throws UnsupportedEncodingException {
+        String l = getLibelle();
+        this.libelleUrl = URLEncoder.encode(l, "UTF-8");
         return libelleUrl;
     }
 
@@ -498,7 +515,7 @@ public class Produits {
 
 
     @Basic
-    @Column(name = "code_article", nullable = false )
+    @Column(name = "code_article", nullable = false, insertable = false, updatable = false)
     public int getCodeArticle() {
         return code_article;
     }
@@ -546,8 +563,68 @@ public class Produits {
         this.similarProduct = similarProduct;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Produits produits = (Produits) o;
+        return idProduits == produits.idProduits &&
+                cleSystem == produits.cleSystem &&
+                code_article == produits.code_article &&
+                Float.compare(produits.ppht, ppht) == 0 &&
+                Float.compare(produits.ppttc, ppttc) == 0 &&
+                Float.compare(produits.pphtPublic, pphtPublic) == 0 &&
+                Float.compare(produits.ppttcPublic, ppttcPublic) == 0 &&
+                visible == produits.visible &&
+                obligatoire == produits.obligatoire &&
+                available == produits.available &&
+                defi == produits.defi &&
+                destockage == produits.destockage &&
+                idMarques == produits.idMarques &&
+                idUv == produits.idUv &&
+                idUf == produits.idUf &&
+                idFamilles == produits.idFamilles &&
+                idSsfamilles == produits.idSsfamilles &&
+                idCategories == produits.idCategories &&
+                idSscategories == produits.idSscategories &&
+                Objects.equals(codeOrvif, produits.codeOrvif) &&
+                Objects.equals(refFournisseur, produits.refFournisseur) &&
+                Objects.equals(libelle, produits.libelle) &&
+                Objects.equals(libelleUrl, produits.libelleUrl) &&
+                Objects.equals(descriptif, produits.descriptif) &&
+                Objects.equals(avantages, produits.avantages) &&
+                Objects.equals(ecoPart, produits.ecoPart) &&
+                Objects.equals(ecoMobilier, produits.ecoMobilier) &&
+                Objects.equals(marquesByIdMarques, produits.marquesByIdMarques) &&
+                Objects.equals(unitesVenteByIdUv, produits.unitesVenteByIdUv) &&
+                Objects.equals(unitesFacturationByIdUf, produits.unitesFacturationByIdUf) &&
+                Objects.equals(famillesByIdFamilles, produits.famillesByIdFamilles) &&
+                Objects.equals(ssFamillesByIdSsfamilles, produits.ssFamillesByIdSsfamilles) &&
+                Objects.equals(categoriesByIdCategories, produits.categoriesByIdCategories) &&
+                Objects.equals(ssCategoriesByIdSscategories, produits.ssCategoriesByIdSscategories) &&
+                Objects.equals(gammesByIdGammes, produits.gammesByIdGammes) &&
+                Objects.equals(complementairesObligatoire, produits.complementairesObligatoire) &&
+                Objects.equals(complementaryProduct, produits.complementaryProduct) &&
+                Objects.equals(similarProduct, produits.similarProduct) &&
+                Objects.equals(imageCollection, produits.imageCollection) &&
+                Objects.equals(otherDocCollection, produits.otherDocCollection) &&
+                Objects.equals(caracteristiqueCollection, produits.caracteristiqueCollection) &&
+                Objects.equals(historiqueModification, produits.historiqueModification) &&
+                Objects.equals(groupe, produits.groupe) &&
+                Objects.equals(stocks, produits.stocks) &&
+                Objects.equals(idGammes, produits.idGammes) &&
+                Objects.equals(groupesByIdProduits, produits.groupesByIdProduits) &&
+                Objects.equals(lignePaniersByIdProduits, produits.lignePaniersByIdProduits) &&
+                Objects.equals(ph, produits.ph);
+    }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public int hashCode() {
+        return Objects.hash(idProduits, cleSystem, code_article, codeOrvif, refFournisseur, libelle, libelleUrl, descriptif, avantages, ppht, ppttc, ecoPart, ecoMobilier, pphtPublic, ppttcPublic, marquesByIdMarques, unitesVenteByIdUv, unitesFacturationByIdUf, famillesByIdFamilles, ssFamillesByIdSsfamilles, categoriesByIdCategories, ssCategoriesByIdSscategories, gammesByIdGammes, visible, obligatoire, complementairesObligatoire, complementaryProduct, similarProduct, imageCollection, otherDocCollection, caracteristiqueCollection, historiqueModification, groupe, stocks, available, defi, destockage, idMarques, idUv, idUf, idFamilles, idSsfamilles, idCategories, idSscategories, idGammes, groupesByIdProduits, lignePaniersByIdProduits, ph);
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -820,7 +897,7 @@ public class Produits {
 
 
 
-
+/**
 
     @Transient
     public Map<String, Integer> getStockCapitalized() {
@@ -836,7 +913,7 @@ public class Produits {
             stocksCapitalized.put(key, s.getValue());
         }
         return stocksCapitalized;
-    }
+    }**/
 
 
 

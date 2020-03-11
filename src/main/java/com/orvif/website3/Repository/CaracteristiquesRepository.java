@@ -8,22 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public interface CaracteristiquesRepository extends JpaRepository<Caracteristiques, CaracteristiquesProduitsPK> {
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -32,13 +20,24 @@ public interface CaracteristiquesRepository extends JpaRepository<Caracteristiqu
     ArrayList<Caracteristiques> getByProduit(@Param("id_produits") int id_produits);
 
 
+    // statement in method returns RESULTSET , errorprone!
+    // for method  getBySousFamille in CaracteristiquesHelper
+    @Query(value = ":stmtGetBySousFamille", nativeQuery = true)
+    ResultSet getBySousFamille(@Param("stmtGetBySousFamille") String stmtGetBySousFamille);
 
 
+    // statement in method returns RESULTSET , errorprone!
+    // for method  getByCategorie in CaracteristiquesHelper
+    @Query(value = ":stmtGetByCategorie", nativeQuery = true)
+    ResultSet getByCategorie(@Param("stmtGetByCategorie") String stmtGetByCategorie);
 
 
+    @Query(value = "SELECT * FROM caracteristiques WHERE libelle = :libelle AND recherche = :recherche", nativeQuery = true)
+    Caracteristiques findWithoutId(@Param("libelle") String libelle, @Param("recherche") int recherche );
 
 
-
+    @Query(value = "SELECT * FROM CARACTERISTIQUES WHERE id_caracteristiques = :id_caracteristiques", nativeQuery = true)
+    Caracteristiques findByIdCustom(@Param("id_caracteristiques") int id_caracteristiques );
 
 
 

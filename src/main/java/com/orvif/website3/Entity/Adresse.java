@@ -1,5 +1,8 @@
 package com.orvif.website3.Entity;
 
+import com.orvif.website3.Entity.helper.AdresseHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -14,6 +17,9 @@ public class Adresse {
     private String pays;
     private String libelle;
     private Collection<AdressesClients> adressesClientsByIdAdresse;
+
+    @Autowired
+    private AdresseHelper ah;
 
     @Id
     @Column(name = "id_adresse", nullable = false)
@@ -123,5 +129,11 @@ public class Adresse {
 
     public void setAdressesClientsByIdAdresse(Collection<AdressesClients> adressesClientsByIdAdresse) {
         this.adressesClientsByIdAdresse = adressesClientsByIdAdresse;
+    }
+
+
+    public boolean remove(int idAdresse) {
+        ah.remove(idAdresse);
+        return true;
     }
 }

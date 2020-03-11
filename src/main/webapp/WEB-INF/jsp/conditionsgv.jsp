@@ -3,7 +3,7 @@
 <c:set scope="request" var="bgSubtop"
        value="https://s1.lmcdn.fr/multimedia/1f1500847894/269345947f478/salles-de-bains-styles-et-tendances.jpg?$p=tbssrm"/>
 <c:set scope="request" var="titleSubtop" value="Conditions G&eacute;n&eacute;rales de Vente"/>
-<c:set scope="request" var="arianeSubtop" value="Accueil > CGV"/>
+<c:set scope="request" var="arianeSubtop" value="accueil > cvg"/>
 <%@ include file="header.jsp" %>
 
 <div>

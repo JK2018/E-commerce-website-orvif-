@@ -4,16 +4,21 @@ package com.orvif.website3.Entity;
 import com.orvif.website3.Entity.CompositeKeys.LignePanierPK;
 
 import javax.persistence.*;
+import java.util.Map;
 
 @Entity
 @Table(name = "ligne_panier", schema = "t_orvif_web_dev")
 @IdClass(LignePanierPK.class)
-public class LignePanier {
+public class LignePanier implements Cloneable{
     private int idPanier;
     private int idProduit;
     private int quantite;
+    private int quantiteMax;//
     private Panier panierByIdPanier;
     private Produits produitsByIdProduit;
+    private float prix;//
+    private float TVA;//
+    private float prixTTC;//
 
     @Id
     @Column(name = "id_panier", nullable = false)
@@ -86,4 +91,76 @@ public class LignePanier {
     public void setProduitsByIdProduit(Produits produitsByIdProduit) {
         this.produitsByIdProduit = produitsByIdProduit;
     }
+
+
+    public int getQuantiteMax() {
+        return quantiteMax;
+    }
+
+    public void setQuantiteMax(int quantiteMax) {
+        this.quantiteMax = quantiteMax;
+    }
+
+    public float getPrix() {
+        return prix;
+    }
+
+    public void setPrix(float prix) {
+        this.prix = prix;
+    }
+
+    public float getTVA() {
+        return TVA;
+    }
+
+    public void setTVA(float TVA) {
+        this.TVA = TVA;
+    }
+
+    public float getPrixTTC() {
+        return prixTTC;
+    }
+
+    public void setPrixTTC(float prixTTC) {
+        this.prixTTC = prixTTC;
+    }
+
+
+    @Override
+    public LignePanier clone() throws CloneNotSupportedException {
+        return (LignePanier) super.clone();
+    }
+
+
+
+
+    private float round2decimal(float number) {
+        return (float) ((Math.floor(number * 100)) / 100);
+    }
+
+
+
+
+/**
+    public void setProduit(Produit p) {
+        this.produit = p;
+        //Get the max number of product with product's and comp products' stocks
+        int productStock = 0;
+        for (Map.Entry<String, Integer> stock : p.getStocks().entrySet()) {
+            productStock += stock.getValue();
+        }
+
+        for (Map.Entry<Integer, Produit> set : p.getComplementairesObligatoire().entrySet()) {
+            int stockProductComp = 0;
+            for (Map.Entry<String, Integer> stock : set.getValue().getStocks().entrySet()) {
+                stockProductComp += stock.getValue();
+            }
+            if (productStock * set.getKey() > stockProductComp) {
+                //Pas assez de stock pour le produit complementaire. Calcul du nombre max que l'on peut vendre.
+                productStock = stockProductComp / set.getKey();
+            }
+        }
+        nbMax = productStock;
+    }**/
+
 }

@@ -28,7 +28,9 @@ public class DAOFactory {
 
 
 
-
+    public static DAOFactory getInstance() throws DAOConfigurationException {
+        return new DAOFactory();
+    }
 
 
     /**

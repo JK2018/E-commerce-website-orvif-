@@ -19,9 +19,14 @@ public interface MarquesRepository extends JpaRepository<Marques, Integer> {
     @Query(value = "SELECT * FROM MARQUES", nativeQuery = true)
     ArrayList<Marques> getAll();
 
+    // used in method add in MarquesHelper
+    @Query(value = "INSERT INTO MARQUES(id_marques,id_visuels,nom,display) VALUES(DEFAULT,:id_visuels,:nom,:display)", nativeQuery = true)
+    void add(@Param("id_visuels") int id_visuels, @Param("nom") String nom, @Param("display") boolean display);
 
 
-
+    // used in method add in MarquesHelper
+    @Query(value = "INSERT INTO MARQUES(id_marques,nom,display) VALUES(DEFAULT,:nom,:display)", nativeQuery = true)
+    void add2(@Param("nom") String nom, @Param("display") boolean display);
 
 
 

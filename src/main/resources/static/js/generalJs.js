@@ -1082,7 +1082,7 @@ $(document).on("click", "#goContact, .goContact", function () {
 		agence = $(this).data("agence");
 	}
 	if (agence != "") {
-		agence = "<br/>L'agence de \" + agence + \" vous r&eacute;pondra dans les plus bref d&eacute;lais.";
+		agence = "<br/>Nous vous r&eacute;pondrons dans les plus bref d&eacute;lais.";
 	}
 	$.ajax({
 		url: "/contactFormTemplate.jsp",

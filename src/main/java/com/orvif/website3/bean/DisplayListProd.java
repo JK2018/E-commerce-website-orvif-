@@ -3,6 +3,7 @@ package com.orvif.website3.bean;
 
 import com.orvif.website3.Entity.*;
 import com.orvif.website3.Entity.CompositeKeys.CaracteristiquesProduitsPK;
+import com.orvif.website3.Entity.helper.CaracteristiquesHelper;
 import com.orvif.website3.Repository.CaracteristiquesRepository;
 import com.orvif.website3.service.Pair;
 
@@ -251,14 +252,17 @@ public class DisplayListProd implements Serializable, Cloneable {
 		}
 		throw new ClassNotFoundException();
 	}
-	/**
-	public void addAppliedFilter(int idFeature, String value, CaracteristiquesRepository dao) {
+
+
+
+
+	public void addAppliedFilter(int idFeature, String value, CaracteristiquesHelper dao) {
 		try {
 			int index = getFilterAppliedIndexByIdFeature(idFeature);
 			//TODO get number of products available with this value
 			appliedFilters.get(index).getItems().add(new Pair<String, String>(value, "X"));
 		} catch (ClassNotFoundException nf) {
-			Caracteristiques c = dao.findById(idFeature);
+			Caracteristiques c = dao.findByIdCustom(idFeature);
 			Filter f = new Filter();
 			f.setIdFeature(idFeature);
 			f.setTitle(c.getLibelle());
@@ -266,6 +270,9 @@ public class DisplayListProd implements Serializable, Cloneable {
 			appliedFilters.add(f);
 		}
 	}
+
+
+
 
 	public void addAvailableFilter(Caracteristiques c) {
 		Filter f = new Filter();
@@ -275,7 +282,11 @@ public class DisplayListProd implements Serializable, Cloneable {
 			f.getItems().add(new Pair<>(value, "X"));
 		}
 		availableFilters.add(f);
-	}**/
+	}
+
+
+
+
 
 	public void removeAppliedFilterFromAvailable() {
 		if (!appliedFilters.isEmpty()) {

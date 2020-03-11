@@ -15,6 +15,8 @@ public class AdressesClients {
     private Client clientByIdClient;
     private Adresse adresseByIdAdresse;
 
+
+
     @Id
     @Column(name = "id_client", nullable = false)
     public int getIdClient() {
@@ -74,4 +76,10 @@ public class AdressesClients {
     public void setAdresseByIdAdresse(Adresse adresseByIdAdresse) {
         this.adresseByIdAdresse = adresseByIdAdresse;
     }
+
+
+    public AdressesClients() {
+    }
+
+
 }

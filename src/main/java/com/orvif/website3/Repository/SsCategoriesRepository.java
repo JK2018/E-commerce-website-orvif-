@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.ArrayList;
+
 public interface SsCategoriesRepository extends JpaRepository<SsCategories, Integer> {
 
     // for method getIdByName in ProduitsHelper
@@ -17,9 +19,27 @@ public interface SsCategoriesRepository extends JpaRepository<SsCategories, Inte
 
 
 
-    // for method getGroupeByProduct in ProduitsHelper
+    // for method getGroupeByProduct && getByIdProduit in ProduitsHelper
     @Query(value = "SELECT * FROM SS_CATEGORIES SC, PRODUITS P WHERE SC.id_sscategories=P.id_sscategories AND P.id_produits = :id_produits" , nativeQuery = true)
     SsCategories getByIdProduit(@Param("id_produits") int id_produits);
+
+
+
+    // for method getByCategorie in SsCategoriesHelper
+    @Query(value = "SELECT * FROM SS_CATEGORIES WHERE parent_categorie = :parent_categorie ORDER BY id_sscategories" , nativeQuery = true)
+    ArrayList<SsCategories> getByCategorie(@Param("parent_categorie") int parent_categorie);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
