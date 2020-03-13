@@ -14,7 +14,7 @@
     <c:forEach items="${jobOfferList}" var="career">
         <li>
             <p>${career.jobTitle}</p>
-            <a href="recrutement?jobId=${career.id}" class="button red-blue">Voir l'annonce</a>
+            <a href="annonce${career.id}" class="button red-blue">Voir l'annonce</a>
         </li>
     </c:forEach>
 </ul>

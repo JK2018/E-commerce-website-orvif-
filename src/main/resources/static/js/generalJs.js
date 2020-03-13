@@ -1,5 +1,5 @@
 // VARIABLES
-let GOOGLE_SITEKEY = "6LdsVK4UAAAAAPg27eO5P1KcKa2ULZZgMmJqV";
+let GOOGLE_SITEKEY = "6Lfay-AUAAAAADFcDTZpnr8vVO-3cvw5vcfiqkDT";
 
 
 function showLoader() {
@@ -1030,12 +1030,12 @@ $(document).on("click", "#myAccount", function () {
 		$(this).next().removeClass("icon-up-open");
 		$(this).next().addClass("icon-down-open");
 	}
-    $("#login-card").on("click", function (event) {
-        event.stopPropagation();
-    });
-    $(document).on("click", function () {
-        $("#login-card").hide();
-    });
+	$("#login-card").on("click", function (event) {
+		event.stopPropagation();
+	});
+	$(document).on("click", function () {
+		$("#login-card").hide();
+	});
 });
 
 
@@ -1082,7 +1082,7 @@ $(document).on("click", "#goContact, .goContact", function () {
 		agence = $(this).data("agence");
 	}
 	if (agence != "") {
-		agence = "<br/>Nous vous r&eacute;pondrons dans les plus bref d&eacute;lais.";
+		agence = "<br/>L'agence de \" + agence + \" vous r&eacute;pondra dans les plus bref d&eacute;lais.";
 	}
 	$.ajax({
 		url: "/contactFormTemplate.jsp",

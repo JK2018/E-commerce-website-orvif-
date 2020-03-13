@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -32,7 +33,28 @@
 
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+
+
+
+
+    <script type="text/javascript">
+        var verifyCallback = function(response) {
+            alert(response);
+        };
+        var widgetId1;
+        var widgetId2;
+        var onloadCallback = function() {
+            // Renders the HTML element with id 'example1' as a reCAPTCHA widget.
+            // The id of the reCAPTCHA widget is assigned to 'widgetId1'.
+            widgetId1 = grecaptcha.render('captcha', {
+                'sitekey' : '6Lfay-AUAAAAADFcDTZpnr8vVO-3cvw5vcfiqkDT',
+                'theme' : 'light'
+            });
+        };
+    </script>
+
+
+
 </head>
 <c:if test="${not empty notifyAtLoad}">
 <span id="notify-at-load" data-message="${notifyAtLoad[0]}" data-type="${notifyAtLoad[1]}"></span>

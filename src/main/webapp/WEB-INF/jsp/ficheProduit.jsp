@@ -9,6 +9,15 @@
 
 <%@ include file="header.jsp" %>
 
+<%--
+test captcha, works
+<form action="javascript:alert(grecaptcha.getResponse(widgetId1));">
+    <div id="captcha"></div>
+    <br>
+    <input type="submit" value="getResponse">
+</form>
+--%>
+
 
 <div id="topProductSheet">
     <c:choose>
@@ -47,7 +56,7 @@
         <hr/>
         <c:if test="${product.defi && not empty client && client.type_client != 'particulier'}">
             <div id="productAvantages">
-                <img src="https://storage.googleapis.com/${applicationScope.static_files_bucket_name}/clubavantage.jpeg"/>
+                <img src="img/clubavantage.jpeg"/>
                 <p>Ce produit fait partie des produits club avantages!</p>
             </div>
         </c:if>
@@ -66,7 +75,7 @@
         </c:if>
         <c:if test="${not empty product.marquesByIdMarques && product.marquesByIdMarques.display && not empty product.marquesByIdMarques.logo.url}">
             <img class="brandLogo"
-                 src="https://storage.googleapis.com/${applicationScope.product_files_bucket_name}/${product.marquesByIdMarques.logo.url}">
+                 src="img/products/${product.marquesByIdMarques.logo.url}">
         </c:if>
     </div>
 </div>
@@ -180,11 +189,11 @@
         <c:forEach items="${groupe.products}" var="prod">
             <tr <c:if test="${not empty highlightRef && highlightRef == prod.codeOrvif}">class="highlightRef"</c:if>>
 
-                <td>${prod.codeOrvif}</td>
+                <td style="vertical-align: middle;">${prod.codeOrvif}</td>
                 <c:forEach items="${prod.caracteristiqueCollection}" var="caracteristique">
-                    <td>${caracteristique.valeurProduit}</td>
+                    <td style="vertical-align: middle;">${caracteristique.valeurProduit}</td>
                 </c:forEach>
-                <td>
+                <td style="vertical-align: middle;">
                     <c:choose>
                         <c:when
                                 test="${ not empty client && client.type_client != 'particulier' }">
@@ -193,17 +202,30 @@
                         <c:otherwise>${ prod.ppttc }&euro;</c:otherwise>
                     </c:choose>
                 </td>
-                <td style="display:flex;align-items: center;justify-content: center;">
-                    <div class="circle <c:choose><c:when test="${prod.available}">available tooltip</c:when><c:otherwise>notAvailable</c:otherwise></c:choose>">
-                        <c:if test="${prod.available}">
-                        <span class="tooltiptext"><c:forEach items="${prod.stockCapitalized}" var="stock">
-                            <p style="white-space: nowrap;"><span>${stock.key}</span><span>${stock.value}</span></p>
-                        </c:forEach></span>
-                        </c:if>
-                    </div>
 
+
+                <td style="vertical-align: middle;">
+                    <c:if test="${prod.available}">
+                    <div class="row" style="display: flex; justify-content: center; vertical-align: middle;">
+                        <div class="col-4" style="font-size: 0.6em; font-weight: bold;vertical-align: middle;">
+                            <c:forEach items="${prod.stockCapitalized}" var="stock">
+                                <p style="white-space: nowrap;text-align: start;">${stock.key}</p>
+                            </c:forEach>
+                        </div>
+                        <div class="col-2" style="font-size: 0.6em; font-weight: bold;vertical-align: middle;">
+                            <c:forEach items="${prod.stockCapitalized}" var="stock">
+                                <p style="white-space: nowrap; text-shadow: 1px 0 0 black, -1px 0 0 black, 0 1px 0 black, 0 -1px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;;<c:if test="${stock.value != 0}"> color: limegreen; text-align: start; </c:if><c:if test="${stock.value == 0}"> color: red; text-align: start; </c:if>">${stock.value}</p>
+                            </c:forEach>
+                        </div>
+                    </div>
+                    </c:if>
+                    <c:if test="${!prod.available}">
+                        <div class="circle notAvailable" style="margin: auto; vertical-align: middle;">
+                        </div>
+                    </c:if>
                 </td>
-                <td>
+
+                <td style="vertical-align: middle;">
                     <c:if test="${prod.available}">
                         <div class="quantityProductSheet">
                             <span class="controlProductSheet minusOne">&minus;</span>
@@ -212,7 +234,7 @@
                         </div>
                     </c:if>
                 </td>
-                <td style="vertical-align: middle;">
+                <td style="vertical-align: middle; margin-right: 10px">
                     <c:if test="${prod.available}">
                         <button data-id="${prod.idProduits}" data-nb="1" class="addToCart button red">Ajouter au panier</button>
                     </c:if>
@@ -306,6 +328,7 @@
         </div>
     </div>
 </c:if>
+
 
 
 <%--<div>--%>

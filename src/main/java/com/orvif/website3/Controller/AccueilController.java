@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "/")
 public class AccueilController {
 
     private SlideshowImage sImg = new SlideshowImage();

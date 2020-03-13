@@ -89,6 +89,9 @@ public class ProduitsHelper {
     @Autowired
     private DocumentRepository dr;
 
+    @Autowired
+    private MarquesHelper mh;
+
     public ProduitsHelper() {
     }
 
@@ -1436,7 +1439,7 @@ public class ProduitsHelper {
                 if (firstLine) { //because same info for all prods in that grp
                     //Recuperation des docs/images
                     Map<String, List<com.orvif.website3.Entity.Document>> map = dh.getDocumentListByProduit(tProd.getIdProduits());
-                    tProd.setMarquesByIdMarques(mr.getById(tProd.getIdMarques()));
+                    tProd.setMarquesByIdMarques(mh.getById(tProd.getIdMarques()));
                     tProd.setImageCollection(map.get("imageCollection"));
                     tProd.setOtherDocCollection(map.get("otherCollection"));
                     tProd.setFamillesByIdFamilles(fh.getByProduit(tProd.getIdProduits()));

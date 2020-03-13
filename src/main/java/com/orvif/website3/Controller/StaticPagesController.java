@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -24,42 +25,42 @@ public class StaticPagesController {
     private MarquesHelper mh;
 
 
-    @GetMapping(path = "/cgv")
+    @GetMapping(path = "cgv")
     public String showConditionsGV() {
         return "conditionsgv";
     }
 
-    @GetMapping(path = "/livraison")
+    @GetMapping(path = "livraison")
     public String showLivraison() {
         return "livraison";
     }
 
-    @GetMapping(path = "/club_avantages")
+    @GetMapping(path = "club_avantages")
     public String showClubAvantage() {
         return "club_avantage";
     }
 
-    @GetMapping(path = "/services")
+    @GetMapping("services")
     public String showServices() {
         return "services";
     }
 
-    @GetMapping(path = "/contact")
+    @GetMapping(path = "contact")
     public String showContact() {
         return "contact";
     }
 
-    @GetMapping(path = "/quisommesnous")
+    @GetMapping(path = "quisommesnous")
     public String showQuisommesnous() {
         return "quisommesnous";
     }
 
-    @GetMapping(path = "/showrooms")
+    @GetMapping(path = "showrooms")
     public String showShowrooms() {
         return "showrooms";
     }
 
-    @GetMapping(path = "/marques")
+    @GetMapping(path = "marques")
     public String showMarques(Model theModel) {
         List<Marques> m = new ArrayList<>();
         m = mh.getAllDistinctLogos();

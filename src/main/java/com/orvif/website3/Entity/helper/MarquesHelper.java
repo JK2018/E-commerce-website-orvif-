@@ -86,6 +86,7 @@ private DocumentHelper dh;
             if (ret.getLogo() != dr.getLogoMarques(ret.getIdMarques())) {
                 ret.setLogo(dr.getLogoMarques(ret.getIdMarques()));
             }
+            System.out.println( "LOGO in mh :" +dh.getLogoMarque(ret.getIdMarques()) + "/   id marques :" +ret.getIdMarques());
         } catch (Exception e) {
             throw new DAOException("Une erreur est survenue : " + e.getMessage());
         }
