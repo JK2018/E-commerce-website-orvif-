@@ -2,6 +2,7 @@ package com.orvif.website3.Repository;
 
 
 import com.orvif.website3.Entity.Categories;
+import com.orvif.website3.Entity.Familles;
 import com.orvif.website3.Entity.SsFamilles;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -37,6 +38,10 @@ public interface CategoriesRepository extends JpaRepository<Categories, Integer>
     // for method getBySousCategorie in CategoriesHelper
     @Query(value = "SELECT * FROM CATEGORIES WHERE id_categories = (SELECT parent_categorie FROM SS_CATEGORIES WHERE id_sscategories = :id_sscategories) ORDER BY id_categories" , nativeQuery = true)
     Categories getBySousCategorie(@Param("id_sscategories") int id_sscategories);
+
+    // for ProduitsController
+    @Query(value = "SELECT * FROM categories WHERE libelle = :libelle" , nativeQuery = true)
+    Categories getByLibelle(@Param("libelle") String libelle);
 
 
 

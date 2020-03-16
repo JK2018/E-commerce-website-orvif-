@@ -33,7 +33,9 @@ public interface FamillesRepository extends JpaRepository<Familles, Integer> {
     Familles getBySousFamille(@Param("id_ssfamilles") int id_ssfamilles);
 
 
-
+    // for ProduitsController
+    @Query(value = "SELECT * FROM FAMILLES WHERE libelle = :libelle" , nativeQuery = true)
+    Familles getByLibelle(@Param("libelle") String libelle);
 
 
 

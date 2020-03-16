@@ -36,6 +36,10 @@ public interface SsFamillesRepository extends JpaRepository<SsFamilles, Integer>
 
 
 
+    // for ProduitsController
+    @Query(value = "SELECT * FROM ss_familles WHERE libelle = :libelle" , nativeQuery = true)
+    SsFamilles getByLibelle(@Param("libelle") String libelle);
+
 
 
 

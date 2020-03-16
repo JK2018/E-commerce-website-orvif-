@@ -143,14 +143,14 @@
 
     <div class="bottom">
         <ul class="nav">
-            <c:forEach items="${ familleCollection }" var="famille">
+            <c:forEach items="${familleCollection}" var="famille">
                 <li class="familleItem"><a
-                        href="listF${famille.idFamilles}__${famille.libelle }">${ famille.libelleCapitalized }</a>
+                        href=${famille.libelle}>${famille.libelleCapitalized }</a>
                     <ul style="display: none;" class="sousFamilleList">
                         <c:forEach items="${famille.ssFamillesByIdFamilles}"
                                    var="sousFamille">
                             <li class="itemSousFamille"><span class="title"><a
-                                    href="listSF${sousFamille.idSsfamilles}__${ famille.libelle }__${sousFamille.libelle}">${sousFamille.libelleCapitalized}</a></span>
+                                    href="${sousFamille.libelle}">${sousFamille.libelleCapitalized}</a></span>
                                 <ul class="categorieList">
                                     <c:set var="compteur" value="0"/>
                                     <c:forEach items="${sousFamille.categoriesByIdSsfamilles }"
@@ -160,7 +160,7 @@
                                     <span style="display:none;" class="subFamList${sousFamille.idSsfamilles}">
                                         </c:if>
                                         <li class="itemCategorie"><a
-                                                href="listC${categorie.idCategories}__${ famille.libelle }__${sousFamille.libelle}__${categorie.libelle }">${ categorie.libelleCapitalized }</a>
+                                                href="${categorie.libelle }">${ categorie.libelleCapitalized }</a>
                                         </li>
                                     </c:forEach>
                                                 <c:if test="${compteur > 5}">

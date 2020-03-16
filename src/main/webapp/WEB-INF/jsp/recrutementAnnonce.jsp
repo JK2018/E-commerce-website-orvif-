@@ -15,8 +15,8 @@
 <div id="listMissionJob">
     <h2>Vos missions</h2>
     <ul>
-        <c:forEach items="${jobOffer.jobMissionsById}" var="mission">
-            <li><span class="circleRed"></span>${mission}
+        <c:forEach items="${jobOffer.jobMissionsById}" var="theMission">
+            <li><span class="circleRed"></span>${theMission.mission}
             </li>
         </c:forEach>
     </ul>
